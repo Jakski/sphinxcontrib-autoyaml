@@ -1,0 +1,3 @@
+include sphinxcontrib_yaml.py
+include README.rst
+include LICENSE
