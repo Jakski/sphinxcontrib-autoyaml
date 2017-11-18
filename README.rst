@@ -1,4 +1,4 @@
-sphinxcontrib-yaml
+sphinxcontrib-autoyaml
 ================================================================================
 
 This Sphinx autodoc extension documents YAML files from comments. It looks for
