@@ -2,8 +2,8 @@ sphinxcontrib-yaml
 ================================================================================
 
 This Sphinx autodoc extension documents YAML files from comments. It looks for
-documentation comment delimeter(default: ``###``) and adds all further comments
-as reST documentation till it finds another delimeter or non-comment line.
+documentation comment delimeter(default: ``###``) and adds it with all further
+comments as reST documentation till it finds end of comment.
 
 Options
 --------------------------------------------------------------------------------
@@ -21,6 +21,20 @@ Options available to use in your configuration:
 ``autoyaml_comment``
    Comment start character(s).
    **DEFAULT**: #
+
+``autoyaml_yaml_extension``
+   YAML files extension to look for.
+   **DEFAULT**: .yml
+
+Installing
+--------------------------------------------------------------------------------
+
+Issue command:
+
+``pip install sphinxcontrib-autoyaml``
+
+and add ``sphinxcontrib-autoyaml`` to ``extensions`` variable in ``conf.py``
+file of Sphinx setup.
 
 Example
 --------------------------------------------------------------------------------
