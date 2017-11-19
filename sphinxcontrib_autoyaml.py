@@ -21,10 +21,9 @@ class AutoYamlDirective(Directive):
                 if subpath.endswith(self.config.autoyaml_yaml_extension) \
                    and not os.path.isdir(subpath):
                     content.extend(self.parse_file(location + '/' + subpath))
-                    self.record_dependencies.add(location + '/' + subpath)
         else:
             content = self.parse_file(location)
-            self.record_dependencies.add(location)
+        self.record_dependencies.add(location)
         node = nodes.paragraph(rawsource=content)
         # parse comment internals as reST
         self.state.nested_parse(StringList(content), 0, node)
