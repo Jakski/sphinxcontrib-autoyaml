@@ -22,10 +22,6 @@ Options available to use in your configuration:
    Comment start character(s).
    **DEFAULT**: #
 
-``autoyaml_yaml_extension``
-   YAML files extension to look for.
-   **DEFAULT**: .yml
-
 Installing
 --------------------------------------------------------------------------------
 
