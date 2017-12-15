@@ -9,7 +9,7 @@ setup(
     description='Sphinx extension to generate docs from YAML comments',
     platforms='any',
     version='0.2.0',
-    py_modules=['sphinxcontrib_autoyaml'],
+    packages=['sphinxcontrib.autoyaml'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Sphinx :: Extension',
