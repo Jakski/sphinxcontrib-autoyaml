@@ -47,7 +47,7 @@ class AutoYamlDirective(Directive):
         for linenum, line in enumerate(lines, start=1):
             if line.startswith(self.config.autoyaml_doc_delimeter):
                 in_docstring = True
-                self._parse_line(line, source, linenum)
+                self._parse_line(line, source, linenum, True)
             elif line.startswith(self.config.autoyaml_comment) \
                and in_docstring:
                 self._parse_line(line, source, linenum)
