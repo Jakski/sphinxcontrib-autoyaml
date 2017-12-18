@@ -8,7 +8,7 @@ setup(
     license='MIT',
     description='Sphinx extension to generate docs from YAML comments',
     platforms='any',
-    version='0.3.0',
+    version='0.3.1',
     packages=['sphinxcontrib.autoyaml'],
     classifiers=[
         'Development Status :: 3 - Alpha',
