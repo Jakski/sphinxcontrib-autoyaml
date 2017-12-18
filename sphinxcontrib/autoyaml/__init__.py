@@ -56,11 +56,14 @@ class AutoYamlDirective(Directive):
                 # add terminating newline
                 self._parse_line('', source, linenum)
 
-    def _parse_line(self, line, source, linenum):
+    def _parse_line(self, line, source, linenum, starting=False):
+        if starting:
+            docstring = line[len(self.config.autoyaml_doc_delimeter):]
+        else:
+            docstring = line[len(self.config.autoyaml_comment):]
         # strip preceding whitespace
         if line and line[0] == ' ':
             line = line[1:]
-        docstring = line[len(self.config.autoyaml_doc_delimeter):]
         self.result.append(docstring, source, linenum)
 
 def setup(app):
