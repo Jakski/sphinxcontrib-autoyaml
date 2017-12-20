@@ -8,7 +8,7 @@ setup(
     license='MIT',
     description='Sphinx extension to generate docs from YAML comments',
     platforms='any',
-    version='0.3.2',
+    version='0.3.3',
     packages=['sphinxcontrib.autoyaml'],
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -19,5 +19,10 @@ setup(
     ],
     install_requires=[
         'Sphinx',
-    ]
+    ],
+    extras_require={
+        'dev': [
+            'sphinx-testing'
+        ]
+    }
 )
