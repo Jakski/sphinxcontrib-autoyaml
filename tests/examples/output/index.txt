@@ -1,0 +1,15 @@
+Hello world!
+************
+
+Item1
+   Casual testing item. Does nothing.
+
+      - property1: "value1"
+        property2: "value2"
+
+Item2
+   Casual testing item2.
+
+After of definition.
+
+Forced newline.

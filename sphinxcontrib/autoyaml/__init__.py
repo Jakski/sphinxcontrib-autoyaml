@@ -45,7 +45,7 @@ class AutoYAMLDirective(Directive):
             lines = src.read().splitlines()
         in_docstring = False
         for linenum, line in enumerate(lines, start=1):
-            if line.startswith(self.config.autoyaml_doc_delimeter):
+            if line.startswith(self.config.autoyaml_doc_delimiter):
                 in_docstring = True
                 self._parse_line(line, source, linenum, True)
             elif line.startswith(self.config.autoyaml_comment) \
@@ -58,7 +58,7 @@ class AutoYAMLDirective(Directive):
 
     def _parse_line(self, line, source, linenum, starting=False):
         if starting:
-            docstring = line[len(self.config.autoyaml_doc_delimeter):]
+            docstring = line[len(self.config.autoyaml_doc_delimiter):]
         else:
             docstring = line[len(self.config.autoyaml_comment):]
         # strip preceding whitespace
@@ -69,6 +69,6 @@ class AutoYAMLDirective(Directive):
 def setup(app):
     app.add_directive('autoyaml', AutoYAMLDirective)
     app.add_config_value('autoyaml_root', '..', 'env')
-    app.add_config_value('autoyaml_doc_delimeter', '###', 'env')
+    app.add_config_value('autoyaml_doc_delimiter', '###', 'env')
     app.add_config_value('autoyaml_comment', '#', 'env')
     return {'version': VERSION}

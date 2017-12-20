@@ -1,0 +1,18 @@
+### Item1
+#   Casual testing item.
+#   Does nothing.
+#
+#   .. code-block:: yaml
+#
+#      - property1: "value1"
+#        property2: "value2"
+something: test
+
+### Item2
+#   Casual testing item2.
+#
+# After of definition.
+#
+# Forced newline.
+Test
+something2: test
