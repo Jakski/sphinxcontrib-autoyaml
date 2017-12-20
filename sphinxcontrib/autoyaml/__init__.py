@@ -8,9 +8,9 @@ from sphinx.ext.autodoc import AutodocReporter
 
 VERSION = '0.0.1'
 
-class AutoYamlException(Exception): pass
+class AutoYAMLException(Exception): pass
 
-class AutoYamlDirective(Directive):
+class AutoYAMLDirective(Directive):
 
     required_arguments = 1
 
@@ -24,7 +24,7 @@ class AutoYamlDirective(Directive):
         if os.path.isfile(location):
             self.parse_file(location)
         else:
-            raise AutoYamlException('%s:%s: location "%s" is not a file.' %
+            raise AutoYAMLException('%s:%s: location "%s" is not a file.' %
                 (
                     self.env.doc2path(self.env.docname, None),
                     self.content_offset - 1,
@@ -62,12 +62,12 @@ class AutoYamlDirective(Directive):
         else:
             docstring = line[len(self.config.autoyaml_comment):]
         # strip preceding whitespace
-        if line and line[0] == ' ':
-            line = line[1:]
+        if docstring and docstring[0] == ' ':
+            docstring = docstring[1:]
         self.result.append(docstring, source, linenum)
 
 def setup(app):
-    app.add_directive('autoyaml', AutoYamlDirective)
+    app.add_directive('autoyaml', AutoYAMLDirective)
     app.add_config_value('autoyaml_root', '..', 'env')
     app.add_config_value('autoyaml_doc_delimeter', '###', 'env')
     app.add_config_value('autoyaml_comment', '#', 'env')
