@@ -11,7 +11,7 @@ def get_latest_version(changelog):
 
 setup(
     name='sphinxcontrib-autoyaml',
-    url='https://github.com/Rayvenden/sphinxcontrib-autoyaml',
+    url='https://github.com/Jakski/sphinxcontrib-autoyaml',
     author='Jakub Pieńkowski',
     author_email='jakski@sealcode.org',
     license='MIT',
