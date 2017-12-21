@@ -6,8 +6,6 @@ from docutils import nodes
 from sphinx.util.nodes import nested_parse_with_titles
 from sphinx.ext.autodoc import AutodocReporter
 
-VERSION = '0.0.1'
-
 class AutoYAMLException(Exception): pass
 
 class AutoYAMLDirective(Directive):
@@ -71,4 +69,3 @@ def setup(app):
     app.add_config_value('autoyaml_root', '..', 'env')
     app.add_config_value('autoyaml_doc_delimiter', '###', 'env')
     app.add_config_value('autoyaml_comment', '#', 'env')
-    return {'version': VERSION}
