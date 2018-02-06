@@ -29,9 +29,8 @@ setup(
     install_requires=[
         'Sphinx',
     ],
-    extras_require={
-        'dev': [
-            'sphinx-testing'
-        ]
-    }
+    test_suite='tests.test_autoyaml.TestAutoYAML',
+    tests_require=[
+        'sphinx-testing'
+    ],
 )
