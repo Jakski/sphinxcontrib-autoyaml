@@ -1,3 +1,3 @@
 master_doc = "index"
 extensions = ["sphinxcontrib.autoyaml"]
-autoyaml_root = "tests/examples/output"
+autoyaml_root = "."
