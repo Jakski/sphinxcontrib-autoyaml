@@ -31,7 +31,7 @@ class AutoYAMLDirective(Directive):
             raise AutoYAMLException('%s:%s: location "%s" is not a file.' % (
                                     self.env.doc2path(self.env.docname, None),
                                     self.content_offset - 1,
-                                    self.arguments[0]))
+                                    location))
         self.record_dependencies.add(location)
         node = nodes.paragraph()
         # parse comment internals as reST
