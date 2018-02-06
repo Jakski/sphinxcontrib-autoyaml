@@ -1,6 +1,7 @@
 ## [0.4.0] - 2018-02-06
 ### Changed
 - Search for YAML files relatively to environment's source directory.
+- Use absolute paths in error messages.
 
 ## [0.3.3] - 2017-12-20
 ### Fixed
