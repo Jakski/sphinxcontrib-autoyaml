@@ -3,6 +3,7 @@ import os
 from docutils.statemachine import ViewList
 from docutils.parsers.rst import Directive
 from docutils import nodes
+from sphinx.util import logging
 from sphinx.util.nodes import nested_parse_with_titles
 from sphinx.ext.autodoc import AutodocReporter
 from sphinx.errors import ExtensionError
@@ -31,6 +32,7 @@ class AutoYAMLDirective(Directive):
                          + '/' + self.arguments[0]))
         self.result = ViewList()
         if os.path.isfile(location):
+            logger.debug('[autoyaml] parsing file: %s', location)
             self.parse_file(location)
         else:
             raise AutoYAMLException('%s:%s: location "%s" is not a file.' % (
