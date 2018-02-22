@@ -1,3 +1,7 @@
+## [0.4.1] - 2018-02-22
+### Added
+- Debug level log messages with paths to parsed files.
+
 ## [0.4.0] - 2018-02-06
 ### Changed
 - Search for YAML files relatively to environment's source directory.
