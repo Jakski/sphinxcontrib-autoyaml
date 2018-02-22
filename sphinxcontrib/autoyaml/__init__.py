@@ -5,10 +5,15 @@ from docutils.parsers.rst import Directive
 from docutils import nodes
 from sphinx.util.nodes import nested_parse_with_titles
 from sphinx.ext.autodoc import AutodocReporter
+from sphinx.errors import ExtensionError
 
 
-class AutoYAMLException(Exception):
-    pass
+logger = logging.getLogger(__name__)
+
+
+class AutoYAMLException(ExtensionError):
+
+    category = 'AutoYAML error'
 
 
 class AutoYAMLDirective(Directive):
