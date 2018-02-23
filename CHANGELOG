@@ -2,6 +2,9 @@
 ### Added
 - Debug level log messages with paths to parsed files.
 
+### Fixed
+- Error reporting compatibility with Sphinx.
+
 ## [0.4.0] - 2018-02-06
 ### Changed
 - Search for YAML files relatively to environment's source directory.
