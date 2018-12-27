@@ -1,3 +1,6 @@
+## [0.4.2] - 2018-12-27
+- Removed deprecated AutodocReporter.
+
 ## [0.4.1] - 2018-02-22
 ### Added
 - Debug level log messages with paths to parsed files.

@@ -1,9 +1,11 @@
 import unittest
 import warnings
+import os
 
 from sphinx_testing import with_app
 
 from sphinxcontrib.autoyaml import AutoYAMLException
+
 
 def build(app, path):
     """Build and return documents without known warnings"""
@@ -14,7 +16,10 @@ def build(app, path):
             "'U' mode is deprecated",
             DeprecationWarning)
         app.build()
-        return (app.outdir / path).read_text()
+        with open(os.path.join(app.outdir, path),
+                  encoding='utf-8') as rendered:
+            return rendered.read()
+
 
 class TestAutoYAML(unittest.TestCase):
 

@@ -4,8 +4,8 @@ from docutils.statemachine import ViewList
 from docutils.parsers.rst import Directive
 from docutils import nodes
 from sphinx.util import logging
+from sphinx.util.docutils import switch_source_input
 from sphinx.util.nodes import nested_parse_with_titles
-from sphinx.ext.autodoc import AutodocReporter
 from sphinx.errors import ExtensionError
 
 
@@ -40,13 +40,10 @@ class AutoYAMLDirective(Directive):
                                     self.content_offset - 1,
                                     location))
         self.record_dependencies.add(location)
-        node = nodes.paragraph()
         # parse comment internals as reST
-        old_reporter = self.state.memo.reporter
-        self.state.memo.reporter = AutodocReporter(
-            self.result, self.state.memo.reporter)
-        nested_parse_with_titles(self.state, self.result, node)
-        self.state.memo.reporter = old_reporter
+        with switch_source_input(self.state, self.result):
+            node = nodes.paragraph()
+            nested_parse_with_titles(self.state, self.result, node)
         return [node]
 
     def parse_file(self, source):
