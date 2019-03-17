@@ -1,5 +1,12 @@
+## [0.5.0] - 2019-03-17
+### Changed
+- Lines with comment delimiter are no longer compiled to output.
+- Only comments directly above mapping keys are compild to output.
+- docutils definitions are now returned instead of paragraphs.
+
 ## [0.4.2] - 2018-12-27
-- Removed deprecated AutodocReporter.
+### Removed
+- Deprecated AutodocReporter.
 
 ## [0.4.1] - 2018-02-22
 ### Added
