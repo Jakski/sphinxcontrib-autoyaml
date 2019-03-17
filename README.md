@@ -30,6 +30,9 @@ enable_varnish
 See `tests/examples/output/index.yml` and `tests/examples/output/index.txt` for
 more examples.
 
+`autoyaml` will take into account only comments which first line starts with
+`autoyaml_doc_delimiter`.
+
 ## Usage
 
 You can use `autoyaml` directive, where you want to extract comments
