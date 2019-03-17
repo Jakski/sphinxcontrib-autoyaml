@@ -15,7 +15,7 @@ setup(
     name='sphinxcontrib-autoyaml',
     url='https://github.com/Jakski/sphinxcontrib-autoyaml',
     author='Jakub Pieńkowski',
-    author_email='jakski@sealcode.org',
+    author_email='jakub@jakski.name',
     license='MIT',
     description='Sphinx extension to generate docs from YAML comments',
     version=get_latest_version('CHANGELOG'),
