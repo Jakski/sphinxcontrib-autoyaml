@@ -39,20 +39,14 @@ class TestAutoYAML(unittest.TestCase):
         copy_srcdir_to_tmpdir=True)
     def test_missing_file(self, app, status, warning):
         ret = None
-        try:
-            build(app, "index.html")
-        except Exception as e:
-            ret = e
-        self.assertIsInstance(ret, AutoYAMLException)
+        with self.assertRaises(AutoYAMLException):
+            build(app, "index.txt")
 
     @with_app(
         buildername="html",
         srcdir="tests/examples/wrong_location2",
         copy_srcdir_to_tmpdir=True)
-    def test_catalog_argument(self, app, status, warning):
+    def test_directory_argument(self, app, status, warning):
         ret = None
-        try:
-            build(app, "index.html")
-        except Exception as e:
-            ret = e
-        self.assertIsInstance(ret, AutoYAMLException)
+        with self.assertRaises(AutoYAMLException):
+            build(app, "index.txt")

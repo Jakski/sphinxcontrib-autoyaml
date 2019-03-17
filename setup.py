@@ -1,6 +1,7 @@
 import re
 from setuptools import setup
 
+
 def get_latest_version(changelog):
     """Retrieve latest version of package from changelog file."""
     # Match strings like "## [1.2.3] - 2017-02-02"
@@ -9,6 +10,7 @@ def get_latest_version(changelog):
         content = changelog.read()
     return re.search(regex, content, re.MULTILINE).group(1)
 
+
 setup(
     name='sphinxcontrib-autoyaml',
     url='https://github.com/Jakski/sphinxcontrib-autoyaml',
@@ -16,7 +18,6 @@ setup(
     author_email='jakski@sealcode.org',
     license='MIT',
     description='Sphinx extension to generate docs from YAML comments',
-    platforms='any',
     version=get_latest_version('CHANGELOG'),
     packages=['sphinxcontrib.autoyaml'],
     classifiers=[
@@ -24,13 +25,14 @@ setup(
         'Framework :: Sphinx :: Extension',
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: MIT License',
-        'Topic :: Documentation'
+        'Topic :: Documentation',
     ],
     install_requires=[
         'Sphinx',
+        'ruamel.yaml',
     ],
     test_suite='tests.test_autoyaml.TestAutoYAML',
     tests_require=[
-        'sphinx-testing'
+        'sphinx-testing',
     ],
 )

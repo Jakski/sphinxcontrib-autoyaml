@@ -1,17 +1,38 @@
-### Item1
-#   Casual testing item.
-#   Does nothing.
+###
+# Value description
 #
-#   .. code-block:: yaml
+# .. code-block:: yaml
 #
-#      - property1: "value1"
-#        property2: "value2"
-something: test
+#    - property1: "value1"
+#      property2: "value2"
+something1: test
 
-### Item2
-#   Casual testing item2.
-#
-# After of definition.
+###
+# Continue sentence
+# to next line
 #
 # Forced newline.
 something2: test
+
+something3:
+  ###
+  # Nested key
+  nested_key: val1
+
+###
+# This comment shouldn't be compiled.
+
+something4: null
+
+something5:
+  - v1
+  ###
+  # This comment shouldn't be compiled.
+  - v2
+  - v3
+
+###
+#No trailing space
+# 
+# in this comment.
+something6: null
