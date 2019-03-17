@@ -48,11 +48,11 @@ Documenting single YAML file.
 
 Options available to use in your configuration:
 
-- *autoyaml_root* **DEFAULT**: ..
+- *autoyaml_root*(`..`)
   Look for YAML files relatively to this directory.
-- *autoyaml_doc_delimiter* **DEFAULT**: ###
+- *autoyaml_doc_delimiter*(`###`)
   Character(s) which start a documentation comment.
-- *autoyaml_comment* **DEFAULT**: #
+- *autoyaml_comment*(`#`)
   Comment start character(s).
 
 ## Installing
