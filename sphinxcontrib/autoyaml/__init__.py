@@ -90,6 +90,11 @@ class AutoYAMLDirective(Directive):
                 if comment:
                     with switch_source_input(self.state, comment):
                         definition = nodes.definition()
+                        # Insert an extra line for backwards-compat with
+                        # the text format that requires an empty line after
+                        # the node name
+                        extra_line = nodes.line('', '')
+                        definition += extra_line
                         self.state.nested_parse(comment, 0, definition)
                         item = nodes.definition_list_item('',
                                 nodes.term('', token.value),
