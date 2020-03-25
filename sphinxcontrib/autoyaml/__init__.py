@@ -96,9 +96,10 @@ class AutoYAMLDirective(Directive):
                         extra_line = nodes.line('', '')
                         definition += extra_line
                         self.state.nested_parse(comment, 0, definition)
-                        item = nodes.definition_list_item('',
-                                nodes.term('', token.value),
-                                definition)
+                        item = nodes.definition_list_item(
+                            '',
+                            nodes.term('', token.value),
+                            definition)
                         dlist = nodes.definition_list('', item)
                         yield dlist
 
