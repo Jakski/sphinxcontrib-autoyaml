@@ -50,3 +50,7 @@ class TestAutoYAML(unittest.TestCase):
         ret = None
         with self.assertRaises(AutoYAMLException):
             build(app, "index.txt")
+
+
+if __name__ == '__main__':
+    unittest.main()

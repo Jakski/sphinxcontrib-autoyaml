@@ -1,0 +1,32 @@
+[tool.poetry]
+name = 'sphinxcontrib-autoyaml'
+version = '0.5.0'
+description = 'Sphinx autodoc extension for documenting YAML files from comments'
+authors = ['Jakub Pieńkowski <jakub+sphinxcontrib-autoyaml@jakski.name>']
+license = 'MIT'
+readme = 'README.md'
+repository = 'https://github.com/Jakski/sphinxcontrib-autoyaml'
+packages = [
+  { include = "sphinxcontrib" },
+]
+classifiers = [
+  'Development Status :: 3 - Alpha',
+  'Framework :: Sphinx :: Extension',
+  'Intended Audience :: System Administrators',
+  'License :: OSI Approved :: MIT License',
+  'Topic :: Documentation',
+]
+
+[tool.poetry.dependencies]
+python = '^3.9'
+Sphinx = '^3.5.1'
+'ruamel.yaml' = '^0.16.12'
+
+[tool.poetry.dev-dependencies]
+sphinx-testing = "^1.0.1"
+flake8 = "^3.8.4"
+tox = "^3.22.0"
+
+[build-system]
+requires = ['poetry-core>=1.0.0']
+build-backend = 'poetry.core.masonry.api'
