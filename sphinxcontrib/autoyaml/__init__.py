@@ -1,9 +1,10 @@
 import os
 
-from ruamel.yaml.reader import Reader
-from ruamel.yaml.scanner import Scanner
-from ruamel.yaml.resolver import VersionedResolver
-from ruamel.yaml import tokens
+from ruamel.yaml.main import compose_all
+from ruamel.yaml.nodes import (
+    MappingNode,
+    ScalarNode,
+)
 from docutils.statemachine import ViewList
 from docutils.parsers.rst import Directive
 from docutils import nodes
@@ -15,12 +16,26 @@ from sphinx.errors import ExtensionError
 logger = logging.getLogger(__name__)
 
 
-class Loader(Reader, Scanner, VersionedResolver):
+class TreeNode:
 
-    def __init__(self, stream, version=None):
-        Reader.__init__(self, stream, loader=self)
-        Scanner.__init__(self, loader=self)
-        VersionedResolver.__init__(self, version, loader=self)
+    def __init__(self, value, comments, parent=None):
+        self.value = value
+        self.parent = parent
+        self.children = []
+        self.comments = comments
+        if value is None:
+            self.comment = None
+        else:
+            # Flow-style entries may attempt to incorrectly reuse comments
+            self.comment = self.comments.pop(value.start_mark.line + 1, None)
+
+    def add_child(self, value):
+        node = TreeNode(value, self.comments, self)
+        self.children.append(node)
+        return node
+
+    def remove_child(self):
+        return self.children.pop(0)
 
 
 class AutoYAMLException(ExtensionError):
@@ -37,7 +52,7 @@ class AutoYAMLDirective(Directive):
         self.env = self.state.document.settings.env
         self.record_dependencies = \
             self.state.document.settings.record_dependencies
-        nodes = []
+        output_nodes = []
         location = os.path.normpath(
             os.path.join(self.env.srcdir,
                          self.config.autoyaml_root
@@ -45,7 +60,7 @@ class AutoYAMLDirective(Directive):
         if os.path.isfile(location):
             logger.debug('[autoyaml] parsing file: %s', location)
             try:
-                nodes.extend(self._parse_file(location))
+                output_nodes.extend(self._parse_file(location))
             except Exception as e:
                 raise AutoYAMLException(
                         'Failed to parse YAML file: %s' % (location)) from e
@@ -55,14 +70,12 @@ class AutoYAMLDirective(Directive):
                                     self.content_offset - 1,
                                     location))
         self.record_dependencies.add(location)
-        return nodes
+        return output_nodes
 
-    def _parse_file(self, source):
+    def _get_comments(self, source, source_file):
         comments = {}
-        with open(source, 'r') as src:
-            doc = src.read()
         in_docstring = False
-        for linenum, line in enumerate(doc.splitlines(), start=1):
+        for linenum, line in enumerate(source.splitlines(), start=1):
             line = line.lstrip()
             if line.startswith(self.config.autoyaml_doc_delimiter):
                 in_docstring = True
@@ -73,35 +86,81 @@ class AutoYAMLDirective(Directive):
                 # strip preceding whitespace
                 if line and line[0] == ' ':
                     line = line[1:]
-                comment.append(line, source, linenum)
+                comment.append(line, source_file, linenum)
             elif in_docstring:
                 comments[linenum] = comment
                 in_docstring = False
-        loader = Loader(doc)
-        token = None
-        while True:
-            last_token, token = token, loader.get_token()
-            if token is None:
-                break
-            end_line = token.end_mark.line
-            if isinstance(last_token, tokens.KeyToken) \
-                    and isinstance(token, tokens.ScalarToken):
-                comment = comments.get(end_line + 1)
-                if comment:
-                    with switch_source_input(self.state, comment):
-                        definition = nodes.definition()
-                        # Insert an extra line for backwards-compat with
-                        # the text format that requires an empty line after
-                        # the node name
-                        extra_line = nodes.line('', '')
-                        definition += extra_line
-                        self.state.nested_parse(comment, 0, definition)
-                        item = nodes.definition_list_item(
-                            '',
-                            nodes.term('', token.value),
-                            definition)
-                        dlist = nodes.definition_list('', item)
-                        yield dlist
+        return comments
+
+    def _parse_document(self, doc, comments):
+        tree = TreeNode(None, comments)
+        if not isinstance(doc, MappingNode):
+            return tree
+        unvisited = [(doc, 0)]
+        while len(unvisited) > 0:
+            node, index = unvisited[-1]
+            if index == len(node.value):
+                if tree.parent is not None:
+                    tree = tree.parent
+                unvisited.pop()
+                continue
+            for key, value in node.value[index:]:
+                index += 1
+                unvisited[-1] = (node, index)
+                if not isinstance(key, ScalarNode):
+                    continue
+                subtree = tree.add_child(key)
+                if isinstance(value, MappingNode) and (
+                            len(unvisited) + 1 <= self.config.autoyaml_level
+                            or self.config.autoyaml_level == 0
+                        ):
+                    unvisited.append((value, 0))
+                    tree = subtree
+                    break
+        return tree
+
+    def _generate_documentation(self, tree):
+        unvisited = [tree]
+        while len(unvisited) > 0:
+            node = unvisited[-1]
+            if len(node.children) > 0:
+                unvisited.append(node.remove_child())
+                continue
+            if node.parent is None or node.comment is None:
+                unvisited.pop()
+                continue
+            with switch_source_input(self.state, node.comment):
+                definition = nodes.definition()
+                if isinstance(node.comment, ViewList):
+                    self.state.nested_parse(node.comment, 0, definition)
+                else:
+                    definition += node.comment
+                node.comment = nodes.definition_list_item(
+                    '',
+                    nodes.term('', node.value.value),
+                    definition,
+                )
+                if node.parent.comment is None:
+                    node.parent.comment = nodes.definition_list()
+                elif not isinstance(
+                        node.parent.comment,
+                        nodes.definition_list):
+                    with switch_source_input(self.state, node.parent.comment):
+                        dlist = nodes.definition_list()
+                        self.state.nested_parse(node.parent.comment, 0, dlist)
+                        node.parent.comment = dlist
+                node.parent.comment += node.comment
+            unvisited.pop()
+        return tree.comment
+
+    def _parse_file(self, source_file):
+        with open(source_file, 'r') as f:
+            source = f.read()
+        comments = self._get_comments(source, source_file)
+        for doc in compose_all(source):
+            yield self._generate_documentation(
+                self._parse_document(doc, comments)
+            )
 
 
 def setup(app):
@@ -109,3 +168,4 @@ def setup(app):
     app.add_config_value('autoyaml_root', '..', 'env')
     app.add_config_value('autoyaml_doc_delimiter', '###', 'env')
     app.add_config_value('autoyaml_comment', '#', 'env')
+    app.add_config_value('autoyaml_level', 1, 'env')

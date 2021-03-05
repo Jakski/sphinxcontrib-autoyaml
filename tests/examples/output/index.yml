@@ -1,38 +1,63 @@
 ###
-# Value description
+# comment1
 #
 # .. code-block:: yaml
 #
 #    - property1: "value1"
 #      property2: "value2"
-something1: test
+key1: value1
 
 ###
-# Continue sentence
-# to next line
+# comment2
+# continues to next line
 #
 # Forced newline.
-something2: test
+key2: value2
 
-something3:
+key3:
   ###
-  # Nested key
-  nested_key: val1
+  # comment3.1 - documented key in undocumented mapping
+  key3.1: value3.1
+  key3.2:
+    key3.2.1: value3.2.1
+    ###
+    # comment3.2.2 - documented key in nested undocumented mapping
+    key3.2.2: value3.2.2
+
+###
+# comment4
+key4:
+  ###
+  # comment4.1 - documented key in documented mapping
+  key4.1:
+    ###
+    # comment4.2.1 - documented key in documented nested mapping
+    key4.2.1: value4.2.1
+    key4.2.2:
+      - key4.2.2.1: value4.2.2.1
+        ###
+        # This comment shouldn't be compiled
+        key4.2.2.2: value4.2.2.2
+      - value
 
 ###
 # This comment shouldn't be compiled.
 
-something4: null
+key5: null
 
-something5:
-  - v1
+key6:
+  - value6-1
   ###
   # This comment shouldn't be compiled.
-  - v2
-  - v3
+  - value6-2
+  - value6-3
 
 ###
 #No trailing space
 # 
 # in this comment.
-something6: null
+key7: null
+
+###
+# This comment shouldn't be compiled.
+[1,2]: null

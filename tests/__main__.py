@@ -7,6 +7,19 @@ from sphinx_testing import with_app
 from sphinxcontrib.autoyaml import AutoYAMLException
 
 
+CONFIG = {
+    'master_doc': 'index',
+    'extensions': ['sphinxcontrib.autoyaml'],
+    'autoyaml_root': '.',
+}
+
+
+def patch_config(delta):
+    r = CONFIG.copy()
+    r.update(delta)
+    return r
+
+
 def build(app, path):
     """Build and return documents without known warnings"""
     with warnings.catch_warnings():
@@ -24,6 +37,7 @@ def build(app, path):
 class TestAutoYAML(unittest.TestCase):
 
     @with_app(
+        confoverrides=patch_config({'autoyaml_level': 0}),
         buildername="text",
         srcdir="tests/examples/output",
         copy_srcdir_to_tmpdir=True)
@@ -34,6 +48,19 @@ class TestAutoYAML(unittest.TestCase):
         self.assertEqual(correct, output)
 
     @with_app(
+        confoverrides=CONFIG,
+        buildername="text",
+        srcdir="tests/examples/output",
+        copy_srcdir_to_tmpdir=True)
+    def test_output(self, app, status, warning):
+        output = build(app, "index.txt")
+        with open("tests/examples/output/index2.txt") as f:
+            correct = f.read()
+        self.assertEqual(correct, output)
+
+
+    @with_app(
+        confoverrides=CONFIG,
         buildername="html",
         srcdir="tests/examples/wrong_location1",
         copy_srcdir_to_tmpdir=True)
@@ -43,6 +70,7 @@ class TestAutoYAML(unittest.TestCase):
             build(app, "index.txt")
 
     @with_app(
+        confoverrides=CONFIG,
         buildername="html",
         srcdir="tests/examples/wrong_location2",
         copy_srcdir_to_tmpdir=True)

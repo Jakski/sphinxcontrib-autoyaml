@@ -1,25 +1,35 @@
 Hello world!
 ************
 
-something1
-
-   Value description
+key1
+   comment1
 
       - property1: "value1"
         property2: "value2"
 
-something2
-
-   Continue sentence to next line
+key2
+   comment2 continues to next line
 
    Forced newline.
 
-nested_key
+key3
+   key3.1
+      comment3.1 - documented key in undocumented mapping
 
-   Nested key
+   key3.2
+      key3.2.2
+         comment3.2.2 - documented key in nested undocumented mapping
 
-something6
+key4
+   comment4
 
+   key4.1
+      comment4.1 - documented key in documented mapping
+
+      key4.2.1
+         comment4.2.1 - documented key in documented nested mapping
+
+key7
    No trailing space
 
    in this comment.
