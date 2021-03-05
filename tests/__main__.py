@@ -45,7 +45,7 @@ class TestAutoYAML(unittest.TestCase):
         output = build(app, "index.txt")
         with open("tests/examples/output/index.txt") as f:
             correct = f.read()
-        self.assertEqual(correct, output)
+        self.assertEqual(correct, output + '\n')
 
     @with_app(
         confoverrides=CONFIG,
@@ -56,8 +56,7 @@ class TestAutoYAML(unittest.TestCase):
         output = build(app, "index.txt")
         with open("tests/examples/output/index2.txt") as f:
             correct = f.read()
-        self.assertEqual(correct, output)
-
+        self.assertEqual(correct, output + '\n')
 
     @with_app(
         confoverrides=CONFIG,

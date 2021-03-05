@@ -158,9 +158,11 @@ class AutoYAMLDirective(Directive):
             source = f.read()
         comments = self._get_comments(source, source_file)
         for doc in compose_all(source):
-            yield self._generate_documentation(
+            docs = self._generate_documentation(
                 self._parse_document(doc, comments)
             )
+            if docs is not None:
+                yield docs
 
 
 def setup(app):

@@ -61,3 +61,28 @@ key7: null
 ###
 # This comment shouldn't be compiled.
 [1,2]: null
+---
+key8: value8
+
+# This comment shouldn'y be compiled.
+
+###
+# comment9
+key9: value9
+
+###
+#
+key10: value10
+
+###
+#
+key11:
+  ###
+  # comment 11.1
+  key11.1: value11.1
+  ###
+  #
+  key11.2: value11.2
+  key11.3: value11.3
+---
+---

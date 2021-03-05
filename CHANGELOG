@@ -1,3 +1,13 @@
+# [0.6.0] - 2021-03-05
+### Changed
+- Use one definition list per YAML document.
+- Comments from nested keys are no longer root level definitions.
+  Parser constructs a tree from found commented keys and decides visibility
+  based on `autoyaml_level`.
+
+### Added
+- Parse nested keys where applicable.
+
 ## [0.5.0] - 2019-03-17
 ### Changed
 - Lines with comment delimiter are no longer compiled to output.
