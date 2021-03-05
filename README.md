@@ -57,6 +57,8 @@ Options available to use in your configuration:
   Character(s) which start a documentation comment.
 - *autoyaml_comment*(`#`)
   Comment start character(s).
+- *autoyaml_level*(`1`)
+  Parse comments from nested mappings n-levels deep.
 
 ## Installing
 
