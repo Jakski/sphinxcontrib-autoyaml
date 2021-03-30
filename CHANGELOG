@@ -1,3 +1,8 @@
+# [0.6.1] - 2021-03-30
+### Changed
+- Support all Python versions from 3.6 up
+- Update dependencies
+
 # [0.6.0] - 2021-03-05
 ### Changed
 - Use one definition list per YAML document.
