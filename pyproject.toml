@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'sphinxcontrib-autoyaml'
-version = '0.6.1'
+version = '0.6.2'
 description = 'Sphinx autodoc extension for documenting YAML files from comments'
 authors = ['Jakub Pieńkowski <jakub+sphinxcontrib-autoyaml@jakski.name>']
 license = 'MIT'
