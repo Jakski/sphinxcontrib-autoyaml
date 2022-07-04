@@ -19,13 +19,12 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = '^3.6'
-Sphinx = '^3.5.1'
+Sphinx = '>=3.5.1 <6'
 'ruamel.yaml' = '^0.16.12'
 
 [tool.poetry.dev-dependencies]
 sphinx-testing = "^1.0.1"
 flake8 = "^3.8.4"
-tox = "^3.22.0"
 
 [build-system]
 requires = ['poetry-core>=1.0.0']
