@@ -12,12 +12,16 @@ on:
 
 jobs:
   linux:
-    name: Linux, Python ${{ matrix.python-version }}
+    name: Linux, Python ${{ matrix.python-version }}, Sphinx ${{ matrix.sphinx-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version:
           - '3.9'
+        sphinx-version:
+          - '3'
+          - '4'
+          - '5'
     steps:
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -25,7 +29,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
           path: |
             ~/.cache
-            .tox
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,11 +38,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Setup Poetry
-        uses: abatilo/actions-poetry@v2.0.0
-
-      - name: Install dependencies
-        run: poetry install
-
       - name: Run tests
-        run: poetry run tox
+        run: ./ci.sh test "sphinx${SPHINX_VERSION}"
+        env:
+          SPHINX_VERSION: ${{ matrix.sphinx-version }}
