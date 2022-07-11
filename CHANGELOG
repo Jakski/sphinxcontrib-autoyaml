@@ -1,3 +1,7 @@
+# [1.0.0] - 2022-07-11
+### Changed
+- Sequences are now traversed as well
+
 # [0.6.2] - 2022-07-04
 ### Added
 - Support for Sphinx 4.x and 5.x

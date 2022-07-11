@@ -1,0 +1,8 @@
+###
+# comment
+#
+# .. code-block:: yaml
+#
+#    - property1: "value1"
+#      property2: "value2"
+key: value

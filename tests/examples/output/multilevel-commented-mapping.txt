@@ -1,0 +1,14 @@
+Test
+****
+
+key
+   comment
+
+   key
+      comment - documented key in documented mapping
+
+      key1
+         comment - documented key in documented nested mapping
+
+      key3
+         comment - documented key in documented nested mapping

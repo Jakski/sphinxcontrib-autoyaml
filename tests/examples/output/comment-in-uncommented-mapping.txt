@@ -1,0 +1,10 @@
+Test
+****
+
+key
+   key1
+      comment - documented key in undocumented mapping
+
+   key2
+      key2
+         comment - documented key in nested undocumented mapping

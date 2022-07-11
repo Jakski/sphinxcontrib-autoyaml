@@ -1,0 +1,9 @@
+key:
+  ###
+  # comment - documented key in undocumented mapping
+  key1: value
+  key2:
+    key1: value
+    ###
+    # comment - documented key in nested undocumented mapping
+    key2: value

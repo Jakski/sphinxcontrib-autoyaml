@@ -1,0 +1,33 @@
+key1:
+  ###
+  # comment
+  - key: value
+  ###
+  # comment
+  - - key1: value
+      key2: value
+      ###
+      # comment
+      key3: value
+      key4: value
+    ###
+    # comment
+    - key1: value
+      key2:
+        key1: value
+        ###
+        # comment
+        key2: value
+        key3: value
+      ###
+      # comment
+      key3: value
+      key4: value
+  - key: value
+  ###
+  # comment
+  - key: value
+key2:
+  ###
+  # comment
+  key: value

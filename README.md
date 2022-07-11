@@ -27,7 +27,7 @@ enable_varnish
    Enable Varnish caching proxy.
 ```
 
-See `tests/examples/output/index.yml` and `tests/examples/output/index.txt` for
+See `tests/examples/output/*.yml` and `tests/examples/output/*.txt` for
 more examples.
 
 `autoyaml` will take into account only comments which first line starts with
@@ -58,7 +58,7 @@ Options available to use in your configuration:
 - *autoyaml_comment*(`#`)
   Comment start character(s).
 - *autoyaml_level*(`1`)
-  Parse comments from nested mappings n-levels deep.
+  Parse comments from nested structures n-levels deep.
 
 ## Installing
 
@@ -73,3 +73,54 @@ And add extension in your project's ``conf.py``:
 ```
 extensions = ["sphinxcontrib.autoyaml"]
 ```
+
+## Caveats
+
+### Mapping keys nested in sequences
+
+Sequences are traversed as well, but they are not represented in output
+documentation. This extension focuses only on documenting mapping keys. It means
+that structure like this:
+
+```yaml
+key:
+  ###
+  # comment1
+  - - inner_key1: value
+      ###
+      # comment2
+      inner_key2: value
+  ###
+  # comment3
+  - inner_key3: value
+```
+
+will be flattened, so it will appear as though inner keys exist directly under
+`key`. Duplicated key documentation will be duplicated in output as well. See
+`tests/examples/output/comment-in-nested-sequence.txt` and
+`tests/examples/output/comment-in-nested-sequence.yml` to get a better
+understanding how sequences are processed.
+
+### Complex mapping keys
+
+YAML allows for complex mapping keys like so:
+
+```yaml
+[1, 2]: value
+```
+
+These kind of keys won't be documented in output, because it's unclear how they
+should be represented as a string.
+
+### Flow-style entries
+
+YAML allows writing complex data structures in single line like JSON.
+Documentation is generated only for the first key in such entry, so this:
+
+```yaml
+###
+# comment
+key: {key1: value, key2: value, key3: value}
+```
+
+would yield documentation only for `key`.

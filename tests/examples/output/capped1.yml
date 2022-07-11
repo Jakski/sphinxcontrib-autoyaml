@@ -1,0 +1,14 @@
+###
+# comment
+key:
+  ###
+  # Don't compile this comment
+  key1: value
+  key2:
+    ###
+    # Don't compile this comment
+    key: value
+  key3:
+    ###
+    # Don't compile this comment
+    - key: value

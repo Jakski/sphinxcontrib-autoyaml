@@ -1,0 +1,17 @@
+###
+# comment
+key: value
+
+---
+
+###
+# comment
+key1: value
+key2: value
+
+---
+---
+
+###
+# comment
+key: value

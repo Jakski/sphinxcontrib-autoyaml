@@ -1,0 +1,13 @@
+###
+# comment
+key:
+  ###
+  # comment - documented key in documented mapping
+  key:
+    ###
+    # comment - documented key in documented nested mapping
+    key1: value
+    key2: value
+    ###
+    # comment - documented key in documented nested mapping
+    key3: value

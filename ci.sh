@@ -84,7 +84,7 @@ test_cmd() {
 	python3 -m venv --clear venv
 	./venv/bin/pip install --no-deps -r "requirements-${requirements}.txt"
 	./venv/bin/pip install --no-deps ./dist/*.whl
-	./venv/bin/python -m tests
+	./venv/bin/python -m tests -v
 }
 
 main() {

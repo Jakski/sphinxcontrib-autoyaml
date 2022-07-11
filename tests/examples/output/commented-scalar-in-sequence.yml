@@ -1,0 +1,6 @@
+key:
+  - value
+  ###
+  # This comment shouldn't be compiled.
+  - value
+  - value
