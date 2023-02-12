@@ -25,6 +25,7 @@ restore_pyproject() {
 
 on_exit() {
 	restore_lockfile
+	restore_pyproject
 }
 
 ensure_poetry() {
@@ -66,7 +67,7 @@ update_requirements_cmd() {
 	declare sphinx_version
 	for sphinx_version in 3 4 5; do
 		poetry add --lock "Sphinx@^${sphinx_version}"
-		poetry export --dev --output "requirements-sphinx${sphinx_version}.txt"
+		poetry export --with dev --output "requirements-sphinx${sphinx_version}.txt"
 		cp poetry.lock.save poetry.lock
 	done
 	rm poetry.lock.save

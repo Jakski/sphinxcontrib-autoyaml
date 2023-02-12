@@ -1,6 +1,6 @@
 [tool.poetry]
 name = 'sphinxcontrib-autoyaml'
-version = '1.0.0'
+version = '1.1.0'
 description = 'Sphinx autodoc extension for documenting YAML files from comments'
 authors = ['Jakub Pieńkowski <jakub+sphinxcontrib-autoyaml@jakski.name>']
 license = 'MIT'
@@ -19,7 +19,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = '^3.6'
-Sphinx = '>=3.5.1 <6'
+Sphinx = '>=3.5.1'
 'ruamel.yaml' = '^0.16.12'
 
 [tool.poetry.dev-dependencies]
