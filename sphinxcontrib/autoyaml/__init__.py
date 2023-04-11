@@ -6,6 +6,7 @@ from ruamel.yaml.nodes import (
     SequenceNode,
     ScalarNode,
 )
+from ruamel.yaml import SafeLoader, Loader
 from docutils.statemachine import ViewList
 from docutils.parsers.rst import Directive
 from docutils import nodes
@@ -175,7 +176,11 @@ class AutoYAMLDirective(Directive):
         with open(source_file, "r") as f:
             source = f.read()
         comments = self._get_comments(source, source_file)
-        for doc in compose_all(source):
+        if self.config.autoyaml_safe_loader:
+            loader = SafeLoader
+        else:
+            loader = Loader
+        for doc in compose_all(source, loader):
             docs = self._generate_documentation(self._parse_document(doc, comments))
             if docs is not None:
                 yield docs
@@ -187,3 +192,5 @@ def setup(app):
     app.add_config_value("autoyaml_doc_delimiter", "###", "env")
     app.add_config_value("autoyaml_comment", "#", "env")
     app.add_config_value("autoyaml_level", 1, "env")
+    # Set to false to preserve backward compatibility.
+    app.add_config_value("autoyaml_safe_loader", False, "env")

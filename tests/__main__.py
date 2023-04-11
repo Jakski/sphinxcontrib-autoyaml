@@ -14,6 +14,7 @@ CONFIG = {
     "extensions": ["sphinxcontrib.autoyaml"],
     "autoyaml_root": ".",
     "autoyaml_level": 0,
+    "autoyaml_safe_loader": True,
 }
 
 
