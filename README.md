@@ -59,6 +59,8 @@ Options available to use in your configuration:
   Comment start character(s).
 - *autoyaml_level*(`1`)
   Parse comments from nested structures n-levels deep.
+- *autoyaml_safe_loader*(`False`)
+  Whether to use YAML SafeLoader
 
 ## Installing
 
