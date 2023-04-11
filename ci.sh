@@ -40,7 +40,7 @@ ensure_poetry() {
 		python3 -m venv --upgrade-deps  "$poetry_venv_path"
 	fi
 	if [ ! -e "${poetry_venv_path}/bin/poetry" ]; then
-		"${poetry_venv_path}/bin/pip" install "poetry==1.1.13"
+		"${poetry_venv_path}/bin/pip" install "poetry==1.3.2"
 	fi
 	mkdir -p "${HOME}/.local/bin"
 	ln -sf "${poetry_venv_path}/bin/poetry" "${HOME}/.local/bin/poetry"
