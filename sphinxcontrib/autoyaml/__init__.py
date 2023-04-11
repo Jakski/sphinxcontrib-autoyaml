@@ -27,7 +27,7 @@ class TreeNode:
             self.comment = None
         else:
             # Flow-style entries may attempt to incorrectly reuse comments
-            self.comment = self.comments.pop(value.start_mark.line + 1, None)
+            self.comment = self.comments.pop(self.value.start_mark.line + 1, None)
 
     def add_child(self, value):
         node = TreeNode(value, self.comments, self)
@@ -114,6 +114,8 @@ class AutoYAMLDirective(Directive):
                 index += 1
                 unvisited[-1] = (node, index)
                 subtree = None
+                node_key = None
+                node_value = None
                 if isinstance(node, SequenceNode):
                     node_value = node_item
                 elif isinstance(node, MappingNode):
@@ -123,6 +125,10 @@ class AutoYAMLDirective(Directive):
                     if not isinstance(node_key, ScalarNode):
                         continue
                     subtree = tree.add_child(node_key)
+                for i in (node_key, node_value):
+                    if isinstance(i, ScalarNode):
+                        for i in range(i.start_mark.line, i.end_mark.line + 1):
+                            comments.pop(i + 1, None)
                 if isinstance(node_value, (MappingNode, SequenceNode)) and (
                     len(unvisited) + 1 <= self.config.autoyaml_level
                     or self.config.autoyaml_level == 0

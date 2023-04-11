@@ -1,0 +1,6 @@
+###
+# Comment for key1
+key1: |
+  ###
+  # Invalid comment for key2
+key2: test
