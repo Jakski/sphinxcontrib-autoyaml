@@ -2,6 +2,9 @@
 ### Fixed
 - Comment strings from multiline scalar values aren't mistakenly used anymore
 
+### Changed
+- Updated dependency lockfiles
+
 # [1.1.0] - 2023-02-12
 ### Removed
 - Upper limits on Sphinx version
