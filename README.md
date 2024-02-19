@@ -5,7 +5,7 @@ is returned as reST definitions, e.g.:
 
 This document:
 
-```
+```yaml
 ###
 # Enable Nginx web server.
 enable_nginx: true
@@ -17,7 +17,7 @@ enable_varnish: true
 
 would be turned into text:
 
-```
+```rst
 enable_nginx
 
    Enable Nginx web server.
@@ -38,7 +38,7 @@ more examples.
 You can use `autoyaml` directive, where you want to extract comments
 from YAML file, e.g.:
 
-```
+```rst
 Some title
 ==========
 
@@ -49,30 +49,30 @@ Documenting single YAML file.
 
 ## Options
 
-Options available to use in your configuration:
-
-- *autoyaml_root*(`..`)
-  Look for YAML files relatively to this directory.
-- *autoyaml_doc_delimiter*(`###`)
-  Character(s) which start a documentation comment.
-- *autoyaml_comment*(`#`)
-  Comment start character(s).
-- *autoyaml_level*(`1`)
-  Parse comments from nested structures n-levels deep.
-- *autoyaml_safe_loader*(`False`)
-  Whether to use YAML SafeLoader
+```python
+# Look for YAML files relatively to this directory.
+autoyaml_root = ".."
+# Character(s) which start a documentation comment.
+autoyaml_doc_delimiter = "###"
+# Comment start character(s).
+autoyaml_comment = "#"
+# Parse comments from nested structures n-levels deep.
+autoyaml_level = 1
+# Whether to use YAML SafeLoader
+autoyaml_safe_loader = False
+```
 
 ## Installing
 
 Issue command:
 
-```
+```sh
 pip install sphinxcontrib-autoyaml
 ```
 
 And add extension in your project's ``conf.py``:
 
-```
+```python
 extensions = ["sphinxcontrib.autoyaml"]
 ```
 
