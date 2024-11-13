@@ -20,7 +20,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = '^3.6'
 Sphinx = '>=3.5.1'
-'ruamel.yaml' = '^0.16.12'
+'ruamel.yaml' = '>=0.16.12'
 
 [tool.poetry.dev-dependencies]
 sphinx-testing = "^1.0.1"
