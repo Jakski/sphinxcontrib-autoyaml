@@ -17,29 +17,29 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ["3.10", "3.11"]
+        python: ["py3-10", "py3-11", "py3-14"]
         env: ["1", "2", "3", "4", "5"]
         exclude:
-          # ModuleNotFoundError: No module named 'tomli'
-          - python: "3.10"
-            env: "5"
+          # Deprecated imghdr
+          - python: "py3-14"
+            env: "1"
+          # Deprecated imghdr
+          - python: "py3-14"
+            env: "2"
+          # Deprecated imghdr
+          - python: "py3-14"
+            env: "3"
     steps:
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-          path: |
-            ~/.cache
-
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v3
+      - uses: jdx/mise-action@v3
         with:
-          python-version: ${{ matrix.python }}
+          version: 2026.5.15 # [default: latest] mise version to install
+          cache: true # [default: true] cache mise using GitHub's cache
 
       - name: Run tests
-        run: ./ci.sh test "$ENV_NUMBER"
+        run: mise run test
         env:
+          MISE_ENV: ${{ matrix.python }}
           ENV_NUMBER: ${{ matrix.env }}

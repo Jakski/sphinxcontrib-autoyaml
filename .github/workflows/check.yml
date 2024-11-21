@@ -1,0 +1,31 @@
+name: Check
+
+on:
+  push:
+    branches:
+      - master
+      - test
+    paths-ignore:
+      - README.md
+      - LICENSE
+      - CHANGELOG
+      - .gitignore
+
+jobs:
+  linux:
+    name: Static
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: jdx/mise-action@v3
+        with:
+          version: 2026.5.15
+          cache: true
+
+      - name: Lint
+        run: mise run lint
+
+      - name: Types
+        run: mise run mypy

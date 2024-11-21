@@ -2,8 +2,6 @@ import unittest
 import warnings
 import os
 from collections import defaultdict
-from pathlib import Path
-from functools import wraps
 
 from sphinx_testing import with_app
 from sphinxcontrib.autoyaml import AutoYAMLException

@@ -1,0 +1,18 @@
+[project]
+name = "sphinxcontrib-autoyaml-env1"
+version = "0.1.0"
+requires-python = ">=3.14,<3.15"
+dependencies = [
+  "sphinx-testing>=1.0.1",
+  "sphinxcontrib-autoyaml",
+  "Sphinx>=4,<5",
+  # Some contrib extensions don't specify required Sphinx version in dependencies, yet fail on setup
+  "sphinxcontrib-applehelp<=1.0.5",
+  "sphinxcontrib-devhelp<=1.0.2",
+  "sphinxcontrib-htmlhelp<=2.0.1",
+  "sphinxcontrib-serializinghtml<=1.1.5",
+  "sphinxcontrib-qthelp<=1.0.3",
+]
+
+[tool.uv.sources]
+sphinxcontrib-autoyaml = { path = "../../.." }
