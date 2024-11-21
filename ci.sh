@@ -9,43 +9,6 @@ on_error() {
 	exit "$exit_code"
 }
 
-restore_lockfile() {
-	if [ -e poetry.lock.save ]; then
-		echo "Restoring original poetry.lock file..."
-		mv poetry.lock.save poetry.lock
-	fi
-}
-
-restore_pyproject() {
-	if [ -e pyproject.toml.save ]; then
-		echo "Restoring original pyproject.toml file..."
-		mv pyproject.toml.save pyproject.toml
-	fi
-}
-
-on_exit() {
-	restore_lockfile
-	restore_pyproject
-}
-
-ensure_poetry() {
-	if which poetry >/dev/null; then
-		return 0
-	fi
-	echo "Ensuring Poetry is installed..."
-	mkdir -p "${HOME}/.local/lib"
-	declare poetry_venv_path
-	poetry_venv_path="${HOME}/.local/lib/poetry_venv"
-	if [ ! -e "$poetry_venv_path" ]; then
-		python3 -m venv --upgrade-deps  "$poetry_venv_path"
-	fi
-	if [ ! -e "${poetry_venv_path}/bin/poetry" ]; then
-		"${poetry_venv_path}/bin/pip" install "poetry==1.3.2"
-	fi
-	mkdir -p "${HOME}/.local/bin"
-	ln -sf "${poetry_venv_path}/bin/poetry" "${HOME}/.local/bin/poetry"
-}
-
 print_help() {
 cat << EOF
 Handle continuous integration tasks.
@@ -59,39 +22,47 @@ Subcommands:
 EOF
 }
 
-# Poetry doesn't implement `--constraint` flag like pip. Yet we want to ensure
-# that tests run always with the same dependency versions.
+# shellcheck disable=SC2034
 update_requirements_cmd() {
-	cp pyproject.toml pyproject.toml.save
-	cp poetry.lock poetry.lock.save
-	declare sphinx_version
-	for sphinx_version in 3 4 5; do
-		poetry add --lock "Sphinx@^${sphinx_version}"
-		poetry export --with dev --output "requirements-sphinx${sphinx_version}.txt"
-		cp poetry.lock.save poetry.lock
+	declare selected=${1:-} i
+	declare -a env1 env2 env3 env4
+	# Some contrib extensions don't specify required Sphinx version in dependencies, yet fail on setup
+	env1=(
+		"Sphinx>=4,<5"
+		"sphinxcontrib-applehelp<=1.0.5"
+		"sphinxcontrib-devhelp<=1.0.2"
+		"sphinxcontrib-htmlhelp<=2.0.1"
+		"sphinxcontrib-serializinghtml<=1.1.5"
+		"sphinxcontrib-qthelp<=1.0.3"
+	)
+	env2=("Sphinx>=5,<6")
+	# ruamel.yaml deprecated compose_all in 0.18
+	env3=("Sphinx>=5,<6" "ruamel.yaml>=0.17,<0.18")
+	env4=("Sphinx>=6,<7")
+	env5=("Sphinx>=7,<8")
+	for i in {1..5}; do
+		if [ -n "$selected" ] && [ "$i" != "$selected" ]; then
+			continue
+		fi
+		declare -n constraints="env${i}"
+		python3 -m venv --clear venv
+		./venv/bin/pip install ".[test]" "${constraints[@]}"
+		./venv/bin/pip freeze --exclude "sphinxcontrib-autoyaml" >"tests/requirements-${i}.txt"
+		if [ "$selected" = "$i" ]; then
+			break
+		fi
 	done
-	rm poetry.lock.save
-	mv pyproject.toml.save pyproject.toml
 }
 
 test_cmd() {
-	declare requirements=$1
-	declare wheel_file
-	for wheel_file in ./dist/*.whl; do
-		rm "$wheel_file"
-	done
-	poetry install --verbose
-	poetry build --format wheel
+	declare env=$1
 	python3 -m venv --clear venv
-	./venv/bin/pip install --no-deps -r "requirements-${requirements}.txt"
-	./venv/bin/pip install --no-deps ./dist/*.whl
+	./venv/bin/pip install --no-deps -r "tests/requirements-${env}.txt" .
 	./venv/bin/python -m tests -v
 }
 
 main() {
 	trap 'on_error ${BASH_SOURCE[0]}:${LINENO}' ERR
-	trap on_exit EXIT
-	ensure_poetry
 
 	declare subcommand
 	subcommand=$1

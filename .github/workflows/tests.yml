@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - test
     paths-ignore:
       - README.md
       - LICENSE
@@ -12,16 +13,16 @@ on:
 
 jobs:
   linux:
-    name: Linux, Python ${{ matrix.python-version }}, Sphinx ${{ matrix.sphinx-version }}
+    name: Linux, Python ${{ matrix.python }}, environment ${{ matrix.env }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version:
-          - '3.9'
-        sphinx-version:
-          - '3'
-          - '4'
-          - '5'
+        python: ["3.10", "3.11"]
+        env: ["1", "2", "3", "4", "5"]
+        exclude:
+          # ModuleNotFoundError: No module named 'tomli'
+          - python: "3.10"
+            env: "5"
     steps:
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -36,9 +37,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.python }}
 
       - name: Run tests
-        run: ./ci.sh test "sphinx${SPHINX_VERSION}"
+        run: ./ci.sh test "$ENV_NUMBER"
         env:
-          SPHINX_VERSION: ${{ matrix.sphinx-version }}
+          ENV_NUMBER: ${{ matrix.env }}
