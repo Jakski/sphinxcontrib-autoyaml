@@ -1,6 +1,5 @@
 import os
 
-from ruamel.yaml.main import compose_all
 from ruamel.yaml.nodes import (
     MappingNode,
     SequenceNode,
@@ -172,6 +171,13 @@ class AutoYAMLDirective(Directive):
             unvisited.pop()
         return tree.comment
 
+    def _compose_all(self, loader):
+        try:
+            while loader.check_node():
+                yield loader._composer.get_node()
+        finally:
+            loader._parser.dispose()
+
     def _parse_file(self, source_file):
         with open(source_file, "r") as f:
             source = f.read()
@@ -180,7 +186,7 @@ class AutoYAMLDirective(Directive):
             loader = SafeLoader
         else:
             loader = Loader
-        for doc in compose_all(source, loader):
+        for doc in self._compose_all(Loader(source)):
             docs = self._generate_documentation(self._parse_document(doc, comments))
             if docs is not None:
                 yield docs

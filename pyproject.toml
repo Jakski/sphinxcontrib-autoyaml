@@ -1,31 +1,34 @@
-[tool.poetry]
-name = 'sphinxcontrib-autoyaml'
-version = '1.1.2'
-description = 'Sphinx autodoc extension for documenting YAML files from comments'
-authors = ['Jakub Pieńkowski <jakub+sphinxcontrib-autoyaml@jakski.name>']
-license = 'MIT'
-readme = 'README.md'
-repository = 'https://github.com/Jakski/sphinxcontrib-autoyaml'
-packages = [
-  { include = "sphinxcontrib" },
-]
-classifiers = [
-  'Development Status :: 3 - Alpha',
-  'Framework :: Sphinx :: Extension',
-  'Intended Audience :: System Administrators',
-  'License :: OSI Approved :: MIT License',
-  'Topic :: Documentation',
-]
-
-[tool.poetry.dependencies]
-python = '^3.6'
-Sphinx = '>=3.5.1'
-'ruamel.yaml' = '>=0.16.12'
-
-[tool.poetry.dev-dependencies]
-sphinx-testing = "^1.0.1"
-flake8 = "^3.8.4"
-
 [build-system]
-requires = ['poetry-core>=1.0.0']
-build-backend = 'poetry.core.masonry.api'
+requires = ["setuptools >= 66.1.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sphinxcontrib-autoyaml"
+version = "1.1.2"
+description = "Sphinx autodoc extension for documenting YAML files from comments"
+authors = [
+  {name = "Jakub Pieńkowski", email = "jakub+sphinxcontrib-autoyaml@jakski.name"},
+]
+license = {text = "MIT"}
+readme = "README.md"
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Framework :: Sphinx :: Extension",
+  "Intended Audience :: System Administrators",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Documentation",
+]
+requires-python = ">=3.6"
+dependencies = [
+  "Sphinx>=3.5.1",
+  "ruamel.yaml>=0.16.12",
+]
+
+[project.optional-dependencies]
+test = [
+  "sphinx-testing>=1.0.1",
+  "flake8>=3.8.4",
+]
+
+[tool.setuptools]
+packages = ["sphinxcontrib"]

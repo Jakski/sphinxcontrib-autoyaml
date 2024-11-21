@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - test
     paths-ignore:
       - README.md
       - LICENSE
@@ -12,16 +13,15 @@ on:
 
 jobs:
   linux:
-    name: Linux, Python ${{ matrix.python-version }}, Sphinx ${{ matrix.sphinx-version }}
+    name: Linux, Python ${{ matrix.python }}, environment ${{ matrix.env }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version:
-          - '3.9'
-        sphinx-version:
-          - '3'
-          - '4'
-          - '5'
+        include:
+          - {python: "3.9", env: "1"}
+          - {python: "3.9", env: "2"}
+          - {python: "3.9", env: "3"}
+          - {python: "3.9", env: "4"}
     steps:
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -36,9 +36,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ matrix.python }}
 
       - name: Run tests
-        run: ./ci.sh test "sphinx${SPHINX_VERSION}"
+        run: ./ci.sh test "$ENV"
         env:
-          SPHINX_VERSION: ${{ matrix.sphinx-version }}
+          ENV: ${{ matrix.env }}
