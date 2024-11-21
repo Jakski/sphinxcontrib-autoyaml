@@ -17,11 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - {python: "3.9", env: "1"}
-          - {python: "3.9", env: "2"}
-          - {python: "3.9", env: "3"}
-          - {python: "3.9", env: "4"}
+        python: ["3.10", "3.11"]
+        env: ["1", "2", "3"]
     steps:
       - name: Cache dependencies
         uses: actions/cache@v2

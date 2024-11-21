@@ -27,13 +27,7 @@ update_requirements_cmd() {
 	declare i
 	declare -a env1 env2 env3 env4
 	# Some contrib extensions don't specify required Sphinx version in dependencies, yet fail on setup
-
-	# ImportError: cannot import name 'environmentfilter' from 'jinja2'
 	env1=(
-		"Sphinx>=3,<4"
-		"jinja2==3.0.3"
-	)
-	env2=(
 		"Sphinx>=4,<5"
 		"sphinxcontrib-applehelp<=1.0.5"
 		"sphinxcontrib-devhelp<=1.0.2"
@@ -41,8 +35,8 @@ update_requirements_cmd() {
 		"sphinxcontrib-serializinghtml<=1.1.5"
 		"sphinxcontrib-qthelp<=1.0.3"
 	)
-	env3=("Sphinx>=5,<6")
-	env4=("Sphinx>=5,<6" "ruamel.yaml>=0.17,<0.18")
+	env2=("Sphinx>=5,<6")
+	env3=("Sphinx>=5,<6" "ruamel.yaml>=0.17,<0.18")
 	for i in {1..4}; do
 		declare -n constraints="env${i}"
 		python3 -m venv --clear venv
