@@ -21,9 +21,9 @@ snowballstemmer==2.2.0
 Sphinx==4.5.0
 sphinx-testing==1.0.1
 sphinxcontrib-applehelp==1.0.4
-sphinxcontrib-devhelp==2.0.0
-sphinxcontrib-htmlhelp==2.1.0
+sphinxcontrib-devhelp==1.0.2
+sphinxcontrib-htmlhelp==2.0.1
 sphinxcontrib-jsmath==1.0.1
-sphinxcontrib-qthelp==2.0.0
-sphinxcontrib-serializinghtml==2.0.0
+sphinxcontrib-qthelp==1.0.3
+sphinxcontrib-serializinghtml==1.1.5
 urllib3==2.2.3
