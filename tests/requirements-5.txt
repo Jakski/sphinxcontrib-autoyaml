@@ -2,7 +2,7 @@ alabaster==0.7.16
 babel==2.16.0
 certifi==2024.8.30
 charset-normalizer==3.4.0
-docutils==0.19
+docutils==0.21.2
 flake8==7.1.1
 idna==3.10
 imagesize==1.4.1
@@ -18,7 +18,7 @@ ruamel.yaml==0.18.6
 ruamel.yaml.clib==0.2.12
 six==1.16.0
 snowballstemmer==2.2.0
-Sphinx==6.2.1
+Sphinx==7.4.7
 sphinx-testing==1.0.1
 sphinxcontrib-applehelp==2.0.0
 sphinxcontrib-devhelp==2.0.0

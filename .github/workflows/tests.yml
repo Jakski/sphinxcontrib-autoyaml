@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         python: ["3.10", "3.11"]
-        env: ["1", "2", "3"]
+        env: ["1", "2", "3", "4", "5"]
     steps:
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -36,6 +36,6 @@ jobs:
           python-version: ${{ matrix.python }}
 
       - name: Run tests
-        run: ./ci.sh test "$ENV"
+        run: ./ci.sh test "$ENV_NUMBER"
         env:
-          ENV: ${{ matrix.env }}
+          ENV_NUMBER: ${{ matrix.env }}

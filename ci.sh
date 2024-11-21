@@ -24,7 +24,7 @@ EOF
 
 # shellcheck disable=SC2034
 update_requirements_cmd() {
-	declare i
+	declare selected=${1:-} i
 	declare -a env1 env2 env3 env4
 	# Some contrib extensions don't specify required Sphinx version in dependencies, yet fail on setup
 	env1=(
@@ -36,12 +36,21 @@ update_requirements_cmd() {
 		"sphinxcontrib-qthelp<=1.0.3"
 	)
 	env2=("Sphinx>=5,<6")
+	# ruamel.yaml deprecated compose_all in 0.18
 	env3=("Sphinx>=5,<6" "ruamel.yaml>=0.17,<0.18")
-	for i in {1..4}; do
+	env4=("Sphinx>=6,<7")
+	env5=("Sphinx>=7,<8")
+	for i in {1..5}; do
+		if [ -n "$selected" ] && [ "$i" != "$selected" ]; then
+			continue
+		fi
 		declare -n constraints="env${i}"
 		python3 -m venv --clear venv
 		./venv/bin/pip install ".[test]" "${constraints[@]}"
 		./venv/bin/pip freeze --exclude "sphinxcontrib-autoyaml" >"tests/requirements-${i}.txt"
+		if [ "$selected" = "$i" ]; then
+			break
+		fi
 	done
 }
 

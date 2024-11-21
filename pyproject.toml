@@ -18,9 +18,9 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Topic :: Documentation",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.6"
 dependencies = [
-  "Sphinx>=4",
+  "Sphinx>=3.5.1",
   "ruamel.yaml>=0.16.12",
 ]
 
