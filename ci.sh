@@ -27,8 +27,11 @@ update_requirements_cmd() {
 	declare i
 	declare -a env1 env2 env3 env4
 	# Some contrib extensions don't specify required Sphinx version in dependencies, yet fail on setup
+
+	# ImportError: cannot import name 'environmentfilter' from 'jinja2'
 	env1=(
 		"Sphinx>=3,<4"
+		"jinja2==3.0.3"
 	)
 	env2=(
 		"Sphinx>=4,<5"
