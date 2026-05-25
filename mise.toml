@@ -1,0 +1,26 @@
+[tools]
+uv = "latest"
+python = "3.14"
+
+[tasks.update-test-lockfile]
+dir = "tests/{{get_env(name='MISE_ENV', default='')}}/env{{get_env(name='ENV_NUMBER', default='')}}"
+run = "uv lock"
+
+[tasks.sync-test]
+dir = "tests/{{get_env(name='MISE_ENV', default='')}}/env{{get_env(name='ENV_NUMBER', default='')}}"
+run = "uv sync --frozen --no-dev"
+
+[tasks.test]
+run = "./tests/{{get_env(name='MISE_ENV', default='')}}/env{{get_env(name='ENV_NUMBER', default='')}}/.venv/bin/python -m tests -v"
+depends = ["sync-test"]
+
+[tasks.sync]
+run = "uv sync --dev"
+
+[tasks.lint]
+run = "./.venv/bin/ruff check ."
+depends = ["sync"]
+
+[tasks.mypy]
+run = "./.venv/bin/mypy sphinxcontrib"
+depends = ["sync"]

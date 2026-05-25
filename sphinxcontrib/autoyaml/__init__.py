@@ -183,10 +183,14 @@ class AutoYAMLDirective(Directive):
             source = f.read()
         comments = self._get_comments(source, source_file)
         if self.config.autoyaml_safe_loader:
-            loader = SafeLoader
+            loader_class = SafeLoader
         else:
-            loader = Loader
-        for doc in self._compose_all(Loader(source)):
+            loader_class = Loader
+        loader = loader_class(source)
+        if hasattr(loader, "max_depth"):
+            raise AutoYAMLException("max_depth attribute already exists on loader object")
+        loader.max_depth = 0
+        for doc in self._compose_all(loader):
             docs = self._generate_documentation(self._parse_document(doc, comments))
             if docs is not None:
                 yield docs
